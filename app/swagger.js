@@ -1,7 +1,7 @@
 module.exports = app => {
   const { router, controller, swagger } = app
   swagger.post('/api/user/access/login',{
-    tags:['权限系统'],
+    tags:['access'],
     summary:'系统登录',
     description:'系统登录',
     parameters:[
@@ -19,7 +19,7 @@ module.exports = app => {
 
   swagger.get('/api/user/access/current',
     {
-      tags:['权限系统'],
+      tags:['access'],
       summary:'查看登录的用户信息',
       description:'查看登录的用户信息',
     })

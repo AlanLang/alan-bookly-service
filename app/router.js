@@ -18,7 +18,7 @@ module.exports = app => {
   // userAccess
   router.post('/api/user/access/login', controller.userAccess.login)
   swagger.post('/api/user/access/login',{
-    tags:['user'],
+    tags:['权限系统'],
     summary:'系统登录',
     description:'系统登录',
     parameters:[
@@ -33,7 +33,10 @@ module.exports = app => {
       description: '密码',
     }]
   })
+
   router.get('/api/user/access/current', app.jwt, controller.userAccess.current)
+  swagger.get('/api/user/access/current',{tags:['权限系统'],summary:'查看登录者'})
+
   router.get('/api/user/access/logout', controller.userAccess.logout)
   router.put('/api/user/access/resetPsw', app.jwt, controller.userAccess.resetPsw)
 

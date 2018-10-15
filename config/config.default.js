@@ -13,13 +13,6 @@ module.exports = appInfo => {
   //   match: '/api',
   // }
 
-  config.security = {
-    csrf: {
-      enable: false,
-    },
-    domainWhiteList: [ 'http://localhost:8000' ],
-  }
-
   config.multipart = {
     fileExtensions: [ '.apk', '.pptx', '.docx', '.csv', '.doc', '.ppt', '.pdf', '.pages', '.wav', '.mov' ], // 增加对 .apk 扩展名的支持
   },

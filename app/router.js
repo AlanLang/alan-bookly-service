@@ -14,7 +14,7 @@ module.exports = app => {
   // router.get('/api/role/:id', controller.role.show)
   // router.get('/api/role', controller.role.index)
   router.delete('/api/role', controller.role.removes)
-  router.resources('role', '/api/role', controller.role)
+  router.resources('role', '/api/role',app.jwt, controller.role)
 
   // userAccess
   router.post('/api/user/access/login', controller.userAccess.login)
@@ -33,6 +33,8 @@ module.exports = app => {
   // router.get('/api/user', controller.user.index)
   router.delete('/api/user', controller.user.removes)
   router.resources('user', '/api/user',app.jwt, controller.user)
+
+  router.resources('notice','/api/notice',app.jwt,controller.notice)
 
   // upload
   router.post('/api/upload', controller.upload.create)

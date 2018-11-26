@@ -1,7 +1,7 @@
 {
-  "name": "egg-RESTfulAPI",
+  "name": "alan-bookly-service",
   "version": "1.0.0",
-  "description": "A optimized Node.js RESTful API Server Template based on egg.js!",
+  "description": "the service of alan-bookly",
   "private": true,
   "dependencies": {
     "await-stream-ready": "^1.0.1",
@@ -50,6 +50,6 @@
     "type": "git",
     "url": ""
   },
-  "author": "lpx@4-m.cn",
+  "author": "Alan",
   "license": "MIT"
 }

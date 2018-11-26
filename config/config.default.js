@@ -46,5 +46,12 @@ module.exports = appInfo => {
   config.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   }
+  config.cluster = {
+    listen: {
+      path: '',
+      port: 7101,
+      hostname: '0.0.0.0',
+    }
+  }
   return config
 }

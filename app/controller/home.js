@@ -2,9 +2,7 @@ const Controller = require('egg').Controller
 
 class HomeController extends Controller {
   async index() {
-    this.ctx.body = `hi, egg-RESTfulAPI!
-    A optimized Node.js RESTful API Server Template based on egg.js.
-    https://github.com/icxcat/egg-RESTfulAPI.git`
+    this.ctx.body = `欢迎使用bookly后台接口服务`
   }
 }
 

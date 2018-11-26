@@ -2,13 +2,10 @@ const Service = require('egg').Service
 
 class UserService extends Service {
   // create======================================================================================================>
-  async create(payload) {
+  async create(payload,isActive) {
     const { ctx, service } = this
-    const role = await service.role.show(payload.role)
-    if (!role) {
-      ctx.throw(404, 'role is not found')
-    }
     payload.password = await this.ctx.genHash(payload.password)
+    payload.isActive = isActive
     return ctx.model.User.create(payload)
   }
 

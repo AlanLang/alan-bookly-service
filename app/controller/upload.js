@@ -26,7 +26,11 @@ class UploadController extends Controller {
     attachment.filename = filename
     attachment.url = `/uploads/${attachment._id.toString()}${extname}`
     // 组装参数 stream
-    const target = path.join(this.config.baseDir, 'app/public/uploads', `${attachment._id.toString()}${attachment.extname}`)
+    let filePath = `app/public/uploads`
+    if(!fs.existsSync(filePath)){
+      fs.mkdirSync(filePath)
+    }
+    const target = path.join(this.config.baseDir, filePath, `${attachment._id.toString()}${attachment.extname}`)
     const writeStream = fs.createWriteStream(target)
     // 文件处理，上传到云存储等等
     try {
@@ -215,6 +219,26 @@ class UploadController extends Controller {
     }
     // 设置响应内容和响应状态码
     ctx.helper.success({ctx})
+  }
+
+  async download(){
+    const { ctx, service } = this
+    // 组装参数
+    const { id } = ctx.params
+    const res = await service.upload.show(id)
+    if(res){
+      const target_U = path.join(this.config.baseDir, 'app/public', `${res.url}`)
+      const hasFile = fs.existsSync(target_U);
+      if(hasFile){
+        this.ctx.attachment(res.filename);
+        this.ctx.set('Content-Type','image/*');
+        this.ctx.body = fs.createReadStream(target_U);
+      }else{
+        this.ctx.throw(404, '不存在的文件')
+      }
+    }else{
+      this.ctx.throw(404, '未找到该文件')
+    }
   }
 }
 

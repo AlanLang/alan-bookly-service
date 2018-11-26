@@ -14,7 +14,7 @@ module.exports = appInfo => {
   // }
 
   config.multipart = {
-    fileExtensions: [ '.apk', '.pptx', '.docx', '.csv', '.doc', '.ppt', '.pdf', '.pages', '.wav', '.mov' ], // 增加对 .apk 扩展名的支持
+    fileExtensions: [ '.png', '.jpg'],
   },
 
   config.bcrypt = {
@@ -22,7 +22,7 @@ module.exports = appInfo => {
   }
 
   config.mongoose = {
-    url: 'mongodb://127.0.0.1:27017/egg_x',
+    url: 'mongodb://127.0.0.1:27017/bookly',
     options: {
       useMongoClient: true,
       autoReconnect: true,
@@ -41,7 +41,7 @@ module.exports = appInfo => {
       enable:false,
       ignoreJSON:true,
     },
-    domainWhiteList: [ 'http://www.w3school.com.cn','http://localhost:8002' ],
+    domainWhiteList: [ 'http://langwenda.com:8006','http://localhost:3001','http://192.168.1.118:3001' ],
   }
   config.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'

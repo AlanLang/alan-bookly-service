@@ -7,12 +7,12 @@ class UserController extends Controller {
     this.UserCreateTransfer = {
       mobile: {type: 'string', required: true, allowEmpty: false, format: /^[0-9]{11}$/},
       password: {type: 'password', required: true, allowEmpty: false, min: 6},
-      realName: {type: 'string', required: true, allowEmpty: false, format: /^[\u2E80-\u9FFF]{2,6}$/}
+      realName: {type: 'string', required: true, allowEmpty: false,max:10}
     }
 
     this.UserUpdateTransfer = {
       mobile: { type: 'string', required: true, allowEmpty: false },
-      realName: {type: 'string', required: true, allowEmpty: false, format: /^[\u2E80-\u9FFF]{2,6}$/}
+      realName: {type: 'string', required: true, allowEmpty: false,max:10}
     }
   }
 
@@ -24,7 +24,19 @@ class UserController extends Controller {
     // 组装参数
     const payload = ctx.request.body || {}
     // 调用 Service 进行业务处理
-    const res = await service.user.create(payload)
+    const res = await service.user.create(payload,true)
+    // 设置响应内容和响应状态码
+    ctx.helper.success({ctx, res})
+  }
+
+  async register(){
+    const { ctx, service } = this
+    // 校验参数
+    ctx.validate(this.UserCreateTransfer)
+    // 组装参数
+    const payload = ctx.request.body || {}
+    // 调用 Service 进行业务处理
+    const res = await service.user.create(payload,false)
     // 设置响应内容和响应状态码
     ctx.helper.success({ctx, res})
   }

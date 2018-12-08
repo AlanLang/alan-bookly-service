@@ -39,54 +39,6 @@ class ReadLogService extends Service {
     }).sort({ createdAt: -1 }).exec()
     return res;
   }
-  // 获取阅读报表
-  async getReadReports(){
-    const createdUser = this.ctx.state.user.data._id
-    let res = await this.ctx.model.ReadLog.find({
-      "createdUser":createdUser,
-      "isRead":1
-    }).sort({ createdAt: -1 }).exec()
-    let re = {
-      week:[],
-      days:0,
-      all:0
-    }
-    const myDate = new Date();
-    for(let i = 6; i >= 0; i --){
-      let today = new Date();
-      let targetday_milliseconds=today.getTime() - 1000*60*60*24*i;
-      today.setTime(targetday_milliseconds);
-      re.week.push({
-        name:today.getDate(),
-        value:0
-      })
-    }
-    let containDays = 0;
-    let upDays = 0;
-    for(let item of res){
-      re.all += item.timeArea
-      let days = Math.floor((myDate.getTime() - item.stopTime.getTime())/(24*3600*1000))
-      if(days === upDays || days - upDays == 1){
-        if((days - upDays) === 1){
-          containDays++
-        }
-        if(days === 0 && upDays === 0){
-          containDays++
-        }
-        upDays = days
-      }
-      if(days < 7){
-        let readDay = re.week.find(function(x) {
-          return x.name == item.stopTime.getDate();
-        })
-        if(readDay){
-          readDay.value += item.readNumber
-        }
-      }
-    }
-    re.days = containDays
-    return re
-  }
 
   // 更新阅读记录
   async update(_id, payload) {
@@ -98,6 +50,7 @@ class ReadLogService extends Service {
     payload.stopTime = new Date()
     payload.timeArea = parseInt((payload.stopTime.getTime() - readLog.startTime.getTime())/1000)
     payload.isRead = 1
+    const readReport = await this.ctx.service.readReport.create(payload.readNumber,payload.timeArea);
     return this.ctx.model.ReadLog.findByIdAndUpdate(_id, payload)
   }
 

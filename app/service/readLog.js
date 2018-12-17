@@ -54,6 +54,10 @@ class ReadLogService extends Service {
     return this.ctx.model.ReadLog.findByIdAndUpdate(_id, payload)
   }
 
+  async destroy(_id){
+    return this.ctx.model.ReadLog.findByIdAndRemove(_id)
+  }
+
    async getReadStatus(_id){
     let count = 0;
     let num = 0;

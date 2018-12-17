@@ -57,6 +57,16 @@ class ReadLogController extends Controller{
     ctx.helper.success({ctx})
   }
 
+  async destroy(){
+    const { ctx, service } = this
+    // 组装参数
+    const { id } = ctx.params
+    // 调用 Service 进行业务处理
+    await service.readLog.destroy(id)
+    // 设置响应内容和响应状态码
+    ctx.helper.success({ctx})
+  }
+
   async getReadStatus(){
     const { ctx, service } = this
     const { id } = ctx.params
